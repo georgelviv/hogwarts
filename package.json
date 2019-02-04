@@ -1,0 +1,35 @@
+{
+  "name": "ski-resort",
+  "version": "0.0.1",
+  "description": "ski-resort",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/georgelviv/ski-resort.git"
+  },
+  "keywords": [
+    "ski"
+  ],
+  "author": "George Shkoropad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/georgelviv/ski-resort/issues"
+  },
+  "homepage": "https://github.com/georgelviv/ski-resort#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "module-alias": "^2.1.0"
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": ">=8.5"
+  },
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "_moduleAliases": {
+    "server": "src/server",
+    "configs": "configs",
+    "helpers": "src/helpers"
+  }
+}
