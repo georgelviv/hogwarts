@@ -3,11 +3,11 @@ const router = require('./router');
 const middlewares = require('./middlewares');
 const { onExit } = require('helpers');
 
-function initServer({ port }) {
+function initServer({ port, db }) {
   const app = express();
 
   app.use(middlewares);
-  app.use('/', router);
+  app.use('/', router(db));
   
   const server = app.listen(port, () => {
     console.log(`Listening on next port: ${ port }`);
@@ -25,4 +25,6 @@ function handleOnExit(server) {
   })
 }
 
-module.exports = initServer;
+module.exports = {
+  initServer
+};
