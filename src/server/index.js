@@ -3,35 +3,26 @@ const router = require('./router');
 const middlewares = require('./middlewares');
 const { onExit } = require('helpers');
 
-class Server {
-  constructor(port) {
-    this.port = port;
+function initServer({ port }) {
+  const app = express();
 
-    this.init();
-  }
+  app.use(middlewares);
+  app.use('/', router);
+  
+  const server = app.listen(port, () => {
+    console.log(`Listening on next port: ${ port }`);
+  });
 
-  init() {
-    this.app = express();
-
-    this.app.use(middlewares);
-    this.app.use('/', router);
-
-    this.server = this.app.listen(this.port, () => {
-      console.log(`Listening on next port: ${ this.port }`);
-    });
-
-    onExit(() => {
-      this.close();
-      process.nextTick(process.exit);
-    })
-  }
-
-  close(cb = () => {}) {
-    this.server.close(() => {
-      console.log('Server shut down');
-      cb();
-    });
-  }
+  handleOnExit(server);
 }
 
-module.exports = Server;
+function handleOnExit(server) {
+  onExit(() => {
+    server.close(() => {
+      console.log('Server shut down');
+      process.exit();
+    });
+  })
+}
+
+module.exports = initServer;

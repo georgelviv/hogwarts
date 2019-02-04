@@ -1,6 +1,16 @@
 require('module-alias/register');
+require('dotenv').config()
 
-const Server = require('server');
-const { SERVER_PORT } = require('configs');
+const { initDB } = require('db');
+const initServer = require('server');
+const SERVER_PORT = process.env.SERVER_PORT;
+const DATABASE_DIST = process.env.DATABASE_DIST;
 
-new Server(SERVER_PORT);
+initDB(DATABASE_DIST)
+  .then((db) => {
+    console.log('woohoo')
+    // initServer({ port: SERVER_PORT, db });
+  })
+  .catch(() => {})
+
+

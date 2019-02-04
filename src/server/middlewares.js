@@ -4,5 +4,4 @@ const router = express.Router();
 
 router.use(morgan('tiny'));
 
-
 module.exports = router;

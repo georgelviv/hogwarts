@@ -1,22 +1,23 @@
 {
-  "name": "ski-resort",
+  "name": "hogwarts",
   "version": "0.0.1",
-  "description": "ski-resort",
+  "description": "hogwarts",
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/georgelviv/ski-resort.git"
+    "url": "git+ssh://git@github.com/georgelviv/hogwarts.git"
   },
   "keywords": [
-    "ski"
+    "hogwarts"
   ],
   "author": "George Shkoropad",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/georgelviv/ski-resort/issues"
+    "url": "https://github.com/georgelviv/hogwarts/issues"
   },
-  "homepage": "https://github.com/georgelviv/ski-resort#readme",
+  "homepage": "https://github.com/georgelviv/hogwarts#readme",
   "dependencies": {
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "module-alias": "^2.1.0",
     "morgan": "^1.9.1"
@@ -27,12 +28,13 @@
   },
   "scripts": {
     "start": "node src/index.js",
-    "start:watch": "nodemon src/index.js"
+    "start:watch": "nodemon --config nodemon.json  src/index.js"
   },
   "_moduleAliases": {
     "server": "src/server",
-    "configs": "configs",
-    "helpers": "src/helpers"
+    "helpers": "src/helpers",
+    "hanlders": "src/handlers",
+    "db": "src/db"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
