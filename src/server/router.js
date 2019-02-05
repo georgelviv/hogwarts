@@ -9,11 +9,11 @@ const router = (db) => {
 
   routes.use('*', (req, res) => {
     res.status(404).send({
-      message: 'Not found'
+      message: 'Not found',
     });
   });
 
   return routes;
-}
+};
 
 module.exports = router;

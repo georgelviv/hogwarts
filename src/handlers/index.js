@@ -1,3 +1,3 @@
 module.exports = {
-  userHandler: require('./users')
-}
+  userHandler: require('./users'),
+};

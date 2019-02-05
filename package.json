@@ -29,7 +29,8 @@
   },
   "scripts": {
     "start": "node src/index.js",
-    "start:watch": "nodemon --config nodemon.json  src/index.js"
+    "start:watch": "nodemon --config nodemon.json  src/index.js",
+    "lint": "npx eslint --fix src"
   },
   "_moduleAliases": {
     "server": "src/server",
@@ -38,6 +39,9 @@
     "db": "src/db"
   },
   "devDependencies": {
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
     "nodemon": "^1.18.9"
   }
 }

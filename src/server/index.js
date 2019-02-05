@@ -8,9 +8,9 @@ function initServer({ port, db }) {
 
   app.use(middlewares);
   app.use('/', router(db));
-  
+
   const server = app.listen(port, () => {
-    console.log(`Listening on next port: ${ port }`);
+    console.log(`Listening on next port: ${port}`);
   });
 
   handleOnExit(server);
@@ -22,9 +22,9 @@ function handleOnExit(server) {
       console.log('Server shut down');
       process.exit();
     });
-  })
+  });
 }
 
 module.exports = {
-  initServer
+  initServer,
 };

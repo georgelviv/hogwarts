@@ -8,12 +8,12 @@ const mkdir = promisify(fs.mkdir);
 
 const initialDB = {
   users: [{
-    id: 100,
-    name: 'Igor'
-  }]
+    id: 1,
+    name: 'Igor',
+  }],
 };
 
-async function initDB (dist) {
+async function initDB(dist) {
   const dir = dirname(dist);
   let isDirCreated;
   let isFileCreated;
@@ -27,9 +27,9 @@ async function initDB (dist) {
 
   if (!isDirCreated) {
     try {
-      await mkdir(dir, { recursive: true })
+      await mkdir(dir, { recursive: true });
     } catch (e) {
-      console.log(`Error to created dir ${ dir }`, e);
+      console.log(`Error to created dir ${dir}`, e);
       throw e;
     }
   }
@@ -45,7 +45,7 @@ async function initDB (dist) {
     try {
       await writeFile(dist, JSON.stringify(initialDB));
     } catch (e) {
-      console.log(`Error to write DB file ${ dist }`, e);
+      console.log(`Error to write DB file ${dist}`, e);
       throw e;
     }
   }
