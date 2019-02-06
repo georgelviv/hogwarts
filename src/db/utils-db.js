@@ -18,6 +18,7 @@ async function readDB(dist, collectionName) {
 }
 
 async function writeDB(dist, collectionName, collection) {
+  let dbFile;
   try {
     const res = await readFile(dist);
     dbFile = JSON.parse(res.toString('utf8'));

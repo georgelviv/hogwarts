@@ -1,3 +1,5 @@
+const userHandler = require('./users');
+
 module.exports = {
-  userHandler: require('./users'),
+  userHandler,
 };

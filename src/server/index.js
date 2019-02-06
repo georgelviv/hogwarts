@@ -1,7 +1,17 @@
 const express = require('express');
+const { onExit } = require('helpers');
+
 const router = require('./router');
 const middlewares = require('./middlewares');
-const { onExit } = require('helpers');
+
+function handleOnExit(server) {
+  onExit(() => {
+    server.close(() => {
+      console.log('Server shut down');
+      process.exit();
+    });
+  });
+}
 
 function initServer({ port, db }) {
   const app = express();
@@ -14,15 +24,6 @@ function initServer({ port, db }) {
   });
 
   handleOnExit(server);
-}
-
-function handleOnExit(server) {
-  onExit(() => {
-    server.close(() => {
-      console.log('Server shut down');
-      process.exit();
-    });
-  });
 }
 
 module.exports = {

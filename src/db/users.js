@@ -3,33 +3,33 @@ const { readDB, writeDB } = require('./utils-db');
 const collectionName = 'users';
 
 async function read(dist, id) {
-  let users;
+  let usersCollection;
   try {
-    users = await readDB(dist, collectionName);
+    usersCollection = await readDB(dist, collectionName);
   } catch (e) {
     console.log('Error to read users', e);
     throw e;
   }
 
   if (id) {
-    return users.find(user => Number(user.id) === Number(id));
+    return usersCollection.find(user => Number(user.id) === Number(id));
   }
-  return users;
+  return usersCollection;
 }
 
 async function create(dist, userData) {
-  let users;
+  let usersCollection;
   let user;
   try {
-    users = await read(dist);
+    usersCollection = await read(dist);
 
     user = {
       ...userData,
-      id: users.length + 1,
+      id: usersCollection.length + 1,
     };
 
-    users.push(user);
-    await writeDB(dist, collectionName, users);
+    usersCollection.push(user);
+    await writeDB(dist, collectionName, usersCollection);
   } catch (e) {
     console.log('Error to create user', e);
     throw e;
@@ -41,8 +41,8 @@ async function create(dist, userData) {
 async function update(dist, id, userData) {
   let updatedUser;
   try {
-    let users = await read(dist);
-    users = users.map((user) => {
+    let usersCollection = await read(dist);
+    usersCollection = usersCollection.map((user) => {
       if (user.id === id) {
         updatedUser = {
           ...userData,
@@ -53,13 +53,13 @@ async function update(dist, id, userData) {
       return userData;
     });
 
-    await writeDB(dist, collectionName, users);
+    await writeDB(dist, collectionName, usersCollection);
   } catch (e) {
     console.log('Error to update user', e);
     throw e;
   }
 
-  return user;
+  return updatedUser;
 }
 
 function users(dist) {
