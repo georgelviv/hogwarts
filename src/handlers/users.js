@@ -40,7 +40,7 @@ const router = (db) => {
       });
   });
 
-  routes.post('/:id', (req, res) => {
+  routes.put('/:id', (req, res) => {
     const userData = req.body;
     db.users.update(userData)
       .then((user) => {

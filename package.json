@@ -30,7 +30,7 @@
   "scripts": {
     "start": "node src/index.js",
     "start:watch": "nodemon --config nodemon.json  src/index.js",
-    "lint": "npx eslint --fix src"
+    "lint": "npx eslint --fix-dry-run src"
   },
   "_moduleAliases": {
     "server": "src/server",

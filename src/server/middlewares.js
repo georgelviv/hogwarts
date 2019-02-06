@@ -7,8 +7,9 @@ const router = express.Router();
 
 router.use(morgan('tiny'));
 router.use(bodyParser.json());
-router.use((err, _, res) => {
+router.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   console.error(err);
+  console.log(res);
   const response = getApiMessage('Something went wrong!');
   res.status(500).json(response);
 });

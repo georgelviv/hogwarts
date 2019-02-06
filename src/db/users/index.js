@@ -1,9 +1,10 @@
-const { readDB, writeDB } = require('./utils-db');
+const { readDB, writeDB } = require('db/utils');
+const User = require('./user-model');
 
 const collectionName = 'users';
+let usersCollection;
 
 async function read(dist, id) {
-  let usersCollection;
   try {
     usersCollection = await readDB(dist, collectionName);
   } catch (e) {
@@ -14,21 +15,22 @@ async function read(dist, id) {
   if (id) {
     return usersCollection.find(user => Number(user.id) === Number(id));
   }
+
   return usersCollection;
 }
 
 async function create(dist, userData) {
-  let usersCollection;
   let user;
   try {
     usersCollection = await read(dist);
 
-    user = {
-      ...userData,
-      id: usersCollection.length + 1,
-    };
+    user = new User({
+      name: userData.name,
+    });
 
-    usersCollection.push(user);
+    usersCollection
+      ? usersCollection.push(user)
+      : [user];
     await writeDB(dist, collectionName, usersCollection);
   } catch (e) {
     console.log('Error to create user', e);
@@ -41,7 +43,7 @@ async function create(dist, userData) {
 async function update(dist, id, userData) {
   let updatedUser;
   try {
-    let usersCollection = await read(dist);
+    usersCollection = await read(dist);
     usersCollection = usersCollection.map((user) => {
       if (user.id === id) {
         updatedUser = {

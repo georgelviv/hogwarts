@@ -1,6 +1,8 @@
-const getApiMessage = (message, type = 'error') => ({
-  type,
-  message,
-});
+const getApiMessage = (message, type = 'error') => {
+  return {
+    type,
+    message,
+  }
+};
 
 module.exports = getApiMessage;

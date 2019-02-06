@@ -6,13 +6,6 @@ const writeFile = promisify(fs.writeFile);
 const access = promisify(fs.access);
 const mkdir = promisify(fs.mkdir);
 
-const initialDB = {
-  users: [{
-    id: 1,
-    name: 'Igor',
-  }],
-};
-
 async function initDB(dist) {
   const dir = dirname(dist);
   let isDirCreated;
@@ -43,7 +36,7 @@ async function initDB(dist) {
 
   if (!isFileCreated) {
     try {
-      await writeFile(dist, JSON.stringify(initialDB));
+      await writeFile(dist, JSON.stringify(''));
     } catch (e) {
       console.log(`Error to write DB file ${dist}`, e);
       throw e;
