@@ -12,6 +12,11 @@ const handleData = (res, data) => {
   res.send(response);
 };
 
+const handleEmptyData = (res, msg) => {
+  const response = getApiMessage(msg, API_MESSAGES_TYPES.info);
+  res.send(response);
+};
+
 const router = (db) => {
   const routes = express.Router();
 
@@ -55,6 +60,25 @@ const router = (db) => {
           handleError(res, 500, `User with id ${userId} not found`);
         } else {
           handleData(res, user);
+        }
+      });
+  });
+
+  routes.delete('/', (_, res) => {
+    db.users.clear()
+      .then(() => {
+        handleEmptyData(res, 'OK');
+      });
+  });
+
+  routes.delete('/:id', (req, res) => {
+    const userId = req.params.id;
+    db.users.remove(userId)
+      .then((isDeleted) => {
+        if (!isDeleted) {
+          handleError(res, 500, `User with id ${userId} not found`);
+        } else {
+          handleEmptyData(res, 'OK');
         }
       });
   });

@@ -66,11 +66,47 @@ async function update(dist, id, userData) {
   return updatedUser;
 }
 
+async function clear(dist) {
+  try {
+    await writeDB(dist, collectionName, []);
+  } catch (e) {
+    console.log('Error to clear user collection', e);
+    throw e;
+  }
+
+  return true;
+}
+
+async function remove(dist, id) {
+  let isDeleted = false;
+
+  try {
+    usersCollection = await read(dist);
+    usersCollection = usersCollection.filter((user) => {
+      if (user.id === id) {
+        isDeleted = true;
+      }
+      return user.id !== id;
+    });
+
+    if (isDeleted) {
+      await writeDB(dist, collectionName, usersCollection);
+    }
+  } catch (e) {
+    console.log('Error to clear user collection', e);
+    throw e;
+  }
+
+  return isDeleted;
+}
+
 function users(dist) {
   return {
     read: read.bind(null, dist),
     create: create.bind(null, dist),
-    update: update.bind(null, dist)
+    update: update.bind(null, dist),
+    clear: clear.bind(null, dist),
+    remove: remove.bind(null, dist)
   };
 }
 
