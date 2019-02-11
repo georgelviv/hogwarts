@@ -37,7 +37,7 @@
     "helpers": "src/helpers",
     "hanlders": "src/handlers",
     "db": "src/db",
-    "contstants": "src/contstants"
+    "constants": "src/constants"
   },
   "devDependencies": {
     "eslint": "^5.13.0",

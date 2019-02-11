@@ -1,10 +1,16 @@
 const express = require('express');
 const { getApiMessage } = require('helpers');
+const { API_MESSAGES_TYPES } = require('constants');
 
 const handleError = (res, statusCode, msg) => {
-  const response = getApiMessage(msg);
+  const response = getApiMessage(msg, API_MESSAGES_TYPES.error);
   res.status(statusCode).json(response);
 };
+
+const handleData = (res, data) => {
+  const response = getApiMessage(data, API_MESSAGES_TYPES.data);
+  res.send(response);
+}
 
 const router = (db) => {
   const routes = express.Router();
@@ -12,7 +18,7 @@ const router = (db) => {
   routes.get('/', (_, res) => {
     db.users.read()
       .then((users) => {
-        res.send(users);
+        handleData(res, users);
       });
   });
 
@@ -23,7 +29,7 @@ const router = (db) => {
         if (!user) {
           handleError(res, 404, `No user with id: ${userId}`);
         } else {
-          res.send(user);
+          handleData(res, user);
         }
       });
   });
@@ -35,7 +41,7 @@ const router = (db) => {
         if (!user) {
           handleError(res, 500, 'Something went wrong');
         } else {
-          res.send(user);
+          handleData(res, user);
         }
       });
   });
@@ -47,7 +53,7 @@ const router = (db) => {
         if (!user) {
           handleError(res, 500, 'Something went wrong');
         } else {
-          res.send(user);
+          handleData(res, user);
         }
       });
   });
