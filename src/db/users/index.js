@@ -13,7 +13,9 @@ async function read(dist, id) {
   }
 
   if (id) {
-    return usersCollection.find(user => Number(user.id) === Number(id));
+    return usersCollection.find((user) => {
+      return Number(user.id) === Number(id);
+    });
   }
 
   return usersCollection;
@@ -28,7 +30,7 @@ async function create(dist, userData) {
       name: userData.name,
     });
 
-    usersCollection
+    usersCollection = usersCollection
       ? usersCollection.push(user)
       : [user];
     await writeDB(dist, collectionName, usersCollection);
