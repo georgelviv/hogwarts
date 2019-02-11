@@ -1,8 +1,8 @@
 const { uuid } = require('helpers');
 
 class User {
-  constructor({ name }) {
-    this.id = uuid(5);
+  constructor({ name, id }) {
+    this.id = id || uuid(5);
     this.name = name;
   }
 }

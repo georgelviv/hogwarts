@@ -27,5 +27,5 @@ function initServer({ port, db }) {
 }
 
 module.exports = {
-  initServer,
+  initServer
 };

@@ -6,12 +6,12 @@ function initDB(dist) {
     setupDBFile(dist)
       .then(() => {
         resolve({
-          users: users(dist),
+          users: users(dist)
         });
       }).catch(reject);
   });
 }
 
 module.exports = {
-  initDB,
+  initDB
 };

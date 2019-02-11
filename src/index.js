@@ -7,7 +7,7 @@ const { initServer } = require('server');
 const { SERVER_PORT, DATABASE_DIST } = process.env;
 
 initDB(DATABASE_DIST)
-  .then(db => {
+  .then((db) => {
     return initServer({ db, port: SERVER_PORT });
   })
   .catch(console.log);

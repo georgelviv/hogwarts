@@ -10,7 +10,7 @@ const handleError = (res, statusCode, msg) => {
 const handleData = (res, data) => {
   const response = getApiMessage(data, API_MESSAGES_TYPES.data);
   res.send(response);
-}
+};
 
 const router = (db) => {
   const routes = express.Router();
@@ -47,11 +47,12 @@ const router = (db) => {
   });
 
   routes.put('/:id', (req, res) => {
+    const userId = req.params.id;
     const userData = req.body;
-    db.users.update(userData)
+    db.users.update(userId, userData)
       .then((user) => {
         if (!user) {
-          handleError(res, 500, 'Something went wrong');
+          handleError(res, 500, `User with id ${userId} not found`);
         } else {
           handleData(res, user);
         }

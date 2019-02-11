@@ -45,18 +45,19 @@ async function update(dist, id, userData) {
   let updatedUser;
   try {
     usersCollection = await read(dist);
+
     usersCollection = usersCollection.map((user) => {
       if (user.id === id) {
-        updatedUser = {
-          ...userData,
-          id,
-        };
+        updatedUser = new User({ ...user, ...userData });
+
         return updatedUser;
       }
-      return userData;
+      return user;
     });
 
-    await writeDB(dist, collectionName, usersCollection);
+    if (updatedUser) {
+      await writeDB(dist, collectionName, usersCollection);
+    }
   } catch (e) {
     console.log('Error to update user', e);
     throw e;
@@ -69,7 +70,7 @@ function users(dist) {
   return {
     read: read.bind(null, dist),
     create: create.bind(null, dist),
-    update: update.bind(null, dist),
+    update: update.bind(null, dist)
   };
 }
 
