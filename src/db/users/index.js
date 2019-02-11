@@ -27,12 +27,11 @@ async function create(dist, userData) {
     usersCollection = await read(dist);
 
     user = new User({
-      name: userData.name,
+      name: userData.name
     });
 
-    usersCollection = usersCollection
-      ? usersCollection.push(user)
-      : [user];
+    usersCollection.push(user);
+
     await writeDB(dist, collectionName, usersCollection);
   } catch (e) {
     console.log('Error to create user', e);

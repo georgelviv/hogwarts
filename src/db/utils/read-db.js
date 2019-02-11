@@ -14,7 +14,7 @@ async function readDB(dist, collectionName) {
     throw e;
   }
 
-  return dbFile[collectionName];
+  return dbFile[collectionName] || [];
 }
 
 

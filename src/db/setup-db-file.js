@@ -36,7 +36,7 @@ async function initDB(dist) {
 
   if (!isFileCreated) {
     try {
-      await writeFile(dist, JSON.stringify(''));
+      await writeFile(dist, JSON.stringify({}));
     } catch (e) {
       console.log(`Error to write DB file ${dist}`, e);
       throw e;
