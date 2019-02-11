@@ -1,24 +1,15 @@
 const express = require('express');
-const { getApiMessage } = require('helpers');
-const { API_MESSAGES_TYPES } = require('constants');
-
-const handleError = (res, statusCode, msg) => {
-  const response = getApiMessage(msg, API_MESSAGES_TYPES.error);
-  res.status(statusCode).json(response);
-};
-
-const handleData = (res, data) => {
-  const response = getApiMessage(data, API_MESSAGES_TYPES.data);
-  res.send(response);
-};
-
-const handleEmptyData = (res, msg) => {
-  const response = getApiMessage(msg, API_MESSAGES_TYPES.info);
-  res.send(response);
-};
+const {
+  handleError,
+  handleData,
+  handleEmptyData,
+  validateUserSchema
+} = require('./users-helpers');
 
 const router = (db) => {
   const routes = express.Router();
+
+  routes.use(validateUserSchema);
 
   routes.get('/', (_, res) => {
     db.users.read()

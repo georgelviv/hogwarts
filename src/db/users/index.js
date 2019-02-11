@@ -1,5 +1,6 @@
 const { readDB, writeDB } = require('db/utils');
 const User = require('./user-model');
+const userSchema = require('./user-schema');
 
 const collectionName = 'users';
 let usersCollection;
@@ -26,9 +27,7 @@ async function create(dist, userData) {
   try {
     usersCollection = await read(dist);
 
-    user = new User({
-      name: userData.name
-    });
+    user = new User({ ...userData });
 
     usersCollection.push(user);
 
@@ -111,4 +110,7 @@ function users(dist) {
 }
 
 
-module.exports = users;
+module.exports = {
+  users,
+  userSchema
+};

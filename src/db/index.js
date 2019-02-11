@@ -1,5 +1,5 @@
 const setupDBFile = require('./setup-db-file');
-const users = require('./users');
+const { users, userSchema } = require('./users');
 
 function initDB(dist) {
   return new Promise((resolve, reject) => {
@@ -13,5 +13,6 @@ function initDB(dist) {
 }
 
 module.exports = {
-  initDB
+  initDB,
+  userSchema
 };
