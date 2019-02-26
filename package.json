@@ -29,8 +29,8 @@
     "node": ">=8.5"
   },
   "scripts": {
-    "start": "node src/index.js",
-    "start:watch": "nodemon --config nodemon.json  src/index.js",
+    "start": "node --require dotenv/config src/index.js",
+    "start:watch": "nodemon --config nodemon.json --require dotenv/config src/index.js",
     "lint": "npx eslint src",
     "lint:fix": "npx eslint --fix src"
   },
