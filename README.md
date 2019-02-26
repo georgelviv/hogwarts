@@ -14,14 +14,6 @@ SERVER_PORT=[Port number]
 
 ## TODO
 
-getUserId(id).then(res.send)
-
-const handler = fn => (req, res) => Promise.resolve()
-  .then(() => fn(req, res))
-  .then(result => res.send(result))
-  .catch(error => console.log(erro));
-
-
 postgress
 
 sequalize

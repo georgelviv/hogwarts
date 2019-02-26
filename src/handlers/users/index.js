@@ -1,77 +1,105 @@
 const express = require('express');
-const {
-  handleError,
-  handleData,
-  handleEmptyData,
-  validateUserSchema
-} = require('./users-helpers');
+const validateUserSchema = require('./users-schema.validator.middleware.js');
+const handler = require('./users.handler');
 
 const router = (db) => {
   const routes = express.Router();
 
-  routes.use(validateUserSchema);
+  routes.use(handler(validateUserSchema));
 
-  routes.get('/', (_, res) => {
-    db.users.read()
-      .then((users) => {
-        handleData(res, users);
+  routes.get('/', (req, res) => {
+    handler(() => {
+      return db.users.read().then((users) => {
+        return { data: users };
       });
+    })(req, res);
   });
 
   routes.get('/:id', (req, res) => {
-    const userId = req.params.id;
-    db.users.read(userId)
-      .then((user) => {
-        if (!user) {
-          handleError(res, 404, `No user with id: ${userId}`);
-        } else {
-          handleData(res, user);
-        }
-      });
+    handler((_req) => {
+      const userId = _req.params.id;
+      return db.users.read(userId)
+        .then((user) => {
+          let result = {
+            error: true,
+            statusCode: 404,
+            msg: `No user with id: ${userId}`
+          };
+          if (user) {
+            result = { data: user };
+          }
+          return result;
+        });
+    })(req, res);
   });
 
   routes.post('/', (req, res) => {
-    const userData = req.body;
-    db.users.create(userData)
-      .then((user) => {
-        if (!user) {
-          handleError(res, 500, 'Something went wrong');
-        } else {
-          handleData(res, user);
-        }
-      });
+    handler((_req) => {
+      const userData = _req.body;
+      return db.users.create(userData)
+        .then((user) => {
+          let result = {
+            error: true,
+            msg: 'Something went wrong'
+          };
+          if (user) {
+            result = { data: user };
+          }
+
+          return result;
+        });
+    })(req, res);
   });
 
   routes.put('/:id', (req, res) => {
-    const userId = req.params.id;
-    const userData = req.body;
-    db.users.update(userId, userData)
-      .then((user) => {
-        if (!user) {
-          handleError(res, 500, `User with id ${userId} not found`);
-        } else {
-          handleData(res, user);
-        }
-      });
+    handler((_req) => {
+      const userId = _req.params.id;
+      const userData = _req.body;
+
+      return db.users.update(userId, userData)
+        .then((user) => {
+          let result = {
+            error: true,
+            statusCode: 500,
+            msg: `User with id ${userId} not found`
+          };
+          if (user) {
+            result = { data: user };
+          }
+
+          return result;
+        });
+    })(req, res);
   });
 
-  routes.delete('/', (_, res) => {
-    db.users.clear()
-      .then(() => {
-        handleEmptyData(res, 'OK');
-      });
+  routes.delete('/', (req, res) => {
+    handler(() => {
+      return db.users.clear()
+        .then(() => {
+          return {
+            msg: 'OK'
+          };
+        });
+    })(req, res);
   });
 
   routes.delete('/:id', (req, res) => {
-    const userId = req.params.id;
-    db.users.remove(userId)
-      .then((isDeleted) => {
-        if (!isDeleted) {
-          handleError(res, 500, `User with id ${userId} not found`);
-        } else {
-          handleEmptyData(res, 'OK');
-        }
-      });
+    handler((_req) => {
+      const userId = _req.params.id;
+      return db.users.remove(userId)
+        .then((isDeleted) => {
+          let result = {
+            error: true,
+            statusCode: 404,
+            msg: `User with id ${userId} not found`
+          };
+
+          if (isDeleted) {
+            result = { msg: 'OK' };
+          }
+          return result;
+        });
+    })(req, res);
   });
 
   return routes;
