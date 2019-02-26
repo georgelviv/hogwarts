@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "node --require dotenv/config src/index.js",
-    "start:watch": "nodemon --config nodemon.json --require dotenv/config src/index.js",
+    "start:watch": "nodemon  --legacy-watch --config nodemon.json --require dotenv/config src/index.js",
     "lint": "npx eslint src",
     "lint:fix": "npx eslint --fix src"
   },

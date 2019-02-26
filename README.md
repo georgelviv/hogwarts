@@ -14,16 +14,6 @@ SERVER_PORT=[Port number]
 
 ## TODO
 
-.env.production symlin
-
-gitignore
-
-nodemon -r dotenv/config index.js
-
-nodemone legacy
-
-wintosn
-
 getUserId(id).then(res.send)
 
 const handler = fn => (req, res) => Promise.resolve()
