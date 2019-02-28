@@ -2,10 +2,10 @@ const { getApiMessage } = require('helpers');
 const { API_MESSAGES_TYPES } = require('constants');
 
 const handler = (fn) => {
-  return (req, res) => {
+  return (req, res, next) => {
     return Promise.resolve()
       .then(() => {
-        return fn(req, res);
+        return fn(req, res, next);
       })
       .then((result) => {
         let response = result;
@@ -17,15 +17,15 @@ const handler = (fn) => {
           if (result.msg) {
             response = getApiMessage(result.msg, API_MESSAGES_TYPES.info);
           }
-  
           if (result.error) {
             throw result;
           }
-        }
 
-        return res.send(response);
+          res.send(response);
+        }
       })
       .catch((err) => {
+        console.log('err', err);
         if (err.statusCode && err.msg) {
           const response = getApiMessage(err.msg, API_MESSAGES_TYPES.error);
           res.status(err.statusCode).json(response);

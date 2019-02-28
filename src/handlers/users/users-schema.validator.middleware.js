@@ -5,7 +5,7 @@ const validateUserSchema = (req, res, next) => {
   if (['POST', 'PUT'].includes(req.method)) {
     const userData = req.body;
 
-    const { error } = Joi.validate(userData, userSchema);
+    const { error } = Joi.validate(userData, userSchema.joi);
     if (error) {
       const errorsList = error.details.map((err) => {
         return err.message;
