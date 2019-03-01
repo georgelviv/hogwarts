@@ -11,12 +11,7 @@ const validateUserSchema = (req, res, next) => {
         return err.message;
       }).join(', ');
 
-      const err = {
-        error: true,
-        statusCode: 400,
-        msg: `Wrong body schema. Next errors: ${errorsList}`
-      };
-      throw err;
+      res.status(400).send(`Wrong body schema. Next errors: ${errorsList}`);
     }
   }
   next();

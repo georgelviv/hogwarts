@@ -5,7 +5,7 @@ const handler = require('./users.handler');
 const router = (db) => {
   const routes = express.Router();
 
-  routes.use(handler(validateUserSchema));
+  routes.use(validateUserSchema);
 
   routes.get('/', (req, res) => {
     handler(() => {

@@ -2,10 +2,10 @@ const { getApiMessage } = require('helpers');
 const { API_MESSAGES_TYPES } = require('constants');
 
 const handler = (fn) => {
-  return (req, res, next) => {
+  return (req, res) => {
     return Promise.resolve()
       .then(() => {
-        return fn(req, res, next);
+        return fn(req, res);
       })
       .then((result) => {
         let response = result;
