@@ -1,12 +1,23 @@
 require('module-alias/register');
-require('dotenv').config();
 
 const { initDB } = require('db');
 const { initServer } = require('server');
 
-const { SERVER_PORT, DATABASE_DIST } = process.env;
+const {
+  DB_NAME: dbName,
+  DB_PASSWORD: pass,
+  DB_USERNAME: user,
+  DB_HOST: dbHost,
+  SERVER_PORT
+} = process.env;
 
-initDB(DATABASE_DIST)
+
+initDB({
+  dbName,
+  pass,
+  user,
+  dbHost
+})
   .then((db) => {
     return initServer({ db, port: SERVER_PORT });
   })

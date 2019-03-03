@@ -1,15 +1,17 @@
-const setupDBFile = require('./setup-db-file');
+// const setupDBFile = require('./setup-db-file');
 const { users, userSchema } = require('./users');
+const dbConnect = require('./db-connect');
 
-function initDB(dist) {
-  return new Promise((resolve, reject) => {
-    setupDBFile(dist)
-      .then(() => {
-        resolve({
-          users: users(dist)
-        });
-      }).catch(reject);
-  });
+function initDB(dbConfigs) {
+  return dbConnect(dbConfigs)
+    .then((sequalize) => {
+      return users(sequalize);
+    })
+    .then((usersModel) => {
+      return {
+        users: usersModel
+      };
+    });
 }
 
 module.exports = {

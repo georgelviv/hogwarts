@@ -22,15 +22,18 @@
     "express": "^4.16.4",
     "joi": "^14.3.1",
     "module-alias": "^2.1.0",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "pg": "^7.8.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.42.1"
   },
   "engineStrict": true,
   "engines": {
     "node": ">=8.5"
   },
   "scripts": {
-    "start": "node src/index.js",
-    "start:watch": "nodemon --config nodemon.json  src/index.js",
+    "start": "node --require dotenv/config src/index.js",
+    "start:watch": "nodemon  --legacy-watch --config nodemon.json --require dotenv/config src/index.js",
     "lint": "npx eslint src",
     "lint:fix": "npx eslint --fix src"
   },

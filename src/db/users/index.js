@@ -1,13 +1,9 @@
-const { readDB, writeDB } = require('db/utils');
-const User = require('./user-model');
 const userSchema = require('./user-schema');
 
-const collectionName = 'users';
-let usersCollection;
-
-async function read(dist, id) {
+async function read(userModel, id) {
+  let usersCollection = [];
   try {
-    usersCollection = await readDB(dist, collectionName);
+    usersCollection = await userModel.findAll();
   } catch (e) {
     console.log('Error to read users', e);
     throw e;
@@ -22,16 +18,11 @@ async function read(dist, id) {
   return usersCollection;
 }
 
-async function create(dist, userData) {
+async function create(userModel, userData) {
   let user;
+  console.log(userData);
   try {
-    usersCollection = await read(dist);
-
-    user = new User({ ...userData });
-
-    usersCollection.push(user);
-
-    await writeDB(dist, collectionName, usersCollection);
+    await userModel.create(userData);
   } catch (e) {
     console.log('Error to create user', e);
     throw e;
@@ -41,72 +32,80 @@ async function create(dist, userData) {
 }
 
 async function update(dist, id, userData) {
-  let updatedUser;
-  try {
-    usersCollection = await read(dist);
+  // let updatedUser;
+  // try {
+  //   usersCollection = await read(dist);
 
-    usersCollection = usersCollection.map((user) => {
-      if (user.id === id) {
-        updatedUser = new User({ ...user, ...userData });
+  //   usersCollection = usersCollection.map((user) => {
+  //     if (user.id === id) {
+  //       updatedUser = new User({ ...user, ...userData });
 
-        return updatedUser;
-      }
-      return user;
-    });
+  //       return updatedUser;
+  //     }
+  //     return user;
+  //   });
 
-    if (updatedUser) {
-      await writeDB(dist, collectionName, usersCollection);
-    }
-  } catch (e) {
-    console.log('Error to update user', e);
-    throw e;
-  }
+  //   if (updatedUser) {
+  //     await writeDB(dist, collectionName, usersCollection);
+  //   }
+  // } catch (e) {
+  //   console.log('Error to update user', e);
+  //   throw e;
+  // }
 
-  return updatedUser;
+  // return updatedUser;
 }
 
 async function clear(dist) {
-  try {
-    await writeDB(dist, collectionName, []);
-  } catch (e) {
-    console.log('Error to clear user collection', e);
-    throw e;
-  }
+  // try {
+  //   await writeDB(dist, collectionName, []);
+  // } catch (e) {
+  //   console.log('Error to clear user collection', e);
+  //   throw e;
+  // }
 
-  return true;
+  // return true;
 }
 
 async function remove(dist, id) {
-  let isDeleted = false;
+  // let isDeleted = false;
 
-  try {
-    usersCollection = await read(dist);
-    usersCollection = usersCollection.filter((user) => {
-      if (user.id === id) {
-        isDeleted = true;
-      }
-      return user.id !== id;
-    });
+  // try {
+  //   usersCollection = await read(dist);
+  //   usersCollection = usersCollection.filter((user) => {
+  //     if (user.id === id) {
+  //       isDeleted = true;
+  //     }
+  //     return user.id !== id;
+  //   });
 
-    if (isDeleted) {
-      await writeDB(dist, collectionName, usersCollection);
-    }
-  } catch (e) {
-    console.log('Error to clear user collection', e);
-    throw e;
-  }
+  //   if (isDeleted) {
+  //     await writeDB(dist, collectionName, usersCollection);
+  //   }
+  // } catch (e) {
+  //   console.log('Error to clear user collection', e);
+  //   throw e;
+  // }
 
-  return isDeleted;
+  // return isDeleted;
 }
 
-function users(dist) {
-  return {
-    read: read.bind(null, dist),
-    create: create.bind(null, dist),
-    update: update.bind(null, dist),
-    clear: clear.bind(null, dist),
-    remove: remove.bind(null, dist)
-  };
+function users(sequalize) {
+  const UserModel = sequalize.define('users', userSchema.sequalize);
+
+  return new Promise((resolve, reject) => {
+    UserModel.sync({ force: true })
+      .then(() => {
+        resolve({
+          read: read.bind(null, UserModel),
+          create: create.bind(null, UserModel),
+          update: update.bind(null, UserModel),
+          clear: clear.bind(null, UserModel),
+          remove: remove.bind(null, UserModel)
+        });
+      })
+      .catch(reject);
+  });
 }
 
 
