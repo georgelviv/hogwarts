@@ -20,6 +20,7 @@ async function read(userModel, id) {
 
 async function create(userModel, userData) {
   let user;
+  console.log(userData);
   try {
     await userModel.create(userData);
   } catch (e) {
