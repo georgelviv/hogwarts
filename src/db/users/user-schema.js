@@ -13,25 +13,30 @@ const userSchemaSequalize = {
     type: Sequelize.STRING,
     validate: {
       len: [3, 200]
-    }
+    },
+    allowNull: false
   },
   gender: {
     type: Sequelize.STRING,
     validate: {
       isIn: [['male', 'female']]
-    }
+    },
+    allowNull: false
   },
   age: {
     type: Sequelize.INTEGER,
     validate: {
       min: 0,
       max: 150
-    }
+    },
+    allowNull: false
   },
   id: {
     unique: true,
     type: Sequelize.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    allowNull: false,
+    autoIncrement: true
   }
 };
 
