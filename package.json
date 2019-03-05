@@ -37,7 +37,9 @@
     "lint": "npx eslint src",
     "lint:fix": "npx eslint --fix src",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
-    "db:migrate:undo": "node_modules/.bin/sequelize db:migrate:undo"
+    "db:migrate:undo": "node_modules/.bin/sequelize db:migrate:undo",
+    "db:seed": "node_modules/.bin/sequelize db:seed:all",
+    "db:seed:undo": "node_modules/.bin/sequelize db:seed:undo:all"
   },
   "_moduleAliases": {
     "server": "src/server",
@@ -50,6 +52,7 @@
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
+    "faker": "^4.1.0",
     "nodemon": "^1.18.9",
     "sequelize-cli": "^5.4.0"
   }
