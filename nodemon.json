@@ -1,4 +1,4 @@
 {
-  "ignore": ["tmp/*", "node_modules/*"],
+  "ignore": ["tmp/*", "node_modules/*", "db/*"],
   "delay": "500"
 }

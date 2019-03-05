@@ -76,9 +76,9 @@ async function remove(userModel, id) {
 }
 
 function users(sequalize) {
-  const UserModel = sequalize.define('users', userSchema.sequalize);
+  const UserModel = sequalize.define('User', userSchema.sequalize);
 
-  return UserModel.sync({ force: true })
+  return UserModel.sync({ force: false })
     .then(() => {
       return {
         read: read.bind(null, UserModel),

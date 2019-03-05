@@ -14,8 +14,4 @@ SERVER_PORT=[Port number]
 
 ## TODO
 
-postgress
 
-sequalize
-
-db-migrate
