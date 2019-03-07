@@ -31,6 +31,14 @@ const userSchemaSequalize = {
     },
     allowNull: false
   },
+  createdAt: {
+    type: Sequelize.TIME,
+    allowNull: false
+  },
+  updatedAt: {
+    type: Sequelize.TIME,
+    allowNull: false
+  },
   id: {
     unique: true,
     type: Sequelize.INTEGER,

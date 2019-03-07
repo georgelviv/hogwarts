@@ -1,17 +1,41 @@
 const userSchema = require('./user-schema');
 
-async function read(userModel, id) {
-  let data;
+async function read(userModel, { limit = 10 }) {
+  let userCollection;
+  limit = Number(limit);
   try {
-    data = id
-      ? await userModel.findById(id)
-      : await userModel.findAll();
+    userCollection = await userModel.findAll({ limit })
   } catch (e) {
     console.log('Error to read users', e);
     throw e;
   }
 
-  return data;
+  return userCollection;
+}
+
+async function count(userModel) {
+  let total;
+  try {
+    total = await userModel.count();
+  } catch (e) {
+    console.log('Error to count users', e);
+    throw e;
+  }
+
+  return total;
+}
+
+async function readById(userModel, id) {
+  let user;
+  id = Number(id);
+  try {
+    user = await userModel.findById(id)
+  } catch (e) {
+    console.log(`Error to find user width id ${id}`, e);
+    throw e;
+  }
+
+  return user;
 }
 
 async function create(userModel, userData) {
@@ -78,14 +102,24 @@ async function remove(userModel, id) {
 function users(sequalize) {
   const UserModel = sequalize.define('User', userSchema.sequalize);
 
-  return UserModel.sync({ force: false })
+  return UserModel.sync({ force: true }, {
+    indexes: [
+      {
+        name: 'name_index',
+        method: 'BTREE',
+        fields: ['name']
+      }
+    ]
+  })
     .then(() => {
       return {
+        readById: readById.bind(null, UserModel),
         read: read.bind(null, UserModel),
         create: create.bind(null, UserModel),
         update: update.bind(null, UserModel),
         clear: clear.bind(null, UserModel),
-        remove: remove.bind(null, UserModel)
+        remove: remove.bind(null, UserModel),
+        count: count.bind(null, UserModel)
       };
     });
 }

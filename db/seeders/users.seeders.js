@@ -1,6 +1,6 @@
 const faker = require('faker');
 
-const seedNumber = 10e3;
+const seedNumber = 10e5;
 const timestamp = new Date();
 
 function genFakeUserList(num) {

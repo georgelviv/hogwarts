@@ -7,17 +7,17 @@ const handler = (fn) => {
 
     return Promise.resolve()
       .then(() => {
-        const handleTime = Date.now() - handleTimeStart;
-        res.set('Server-Timing', `db;dur=${handleTime}`);
-
         return fn(req, res);
       })
       .then((result) => {
         let response = result;
 
+        const handleTime = Date.now() - handleTimeStart;
+        res.set('Server-Timing', `db;dur=${handleTime}`);
+
         if (result) {
           if (result.data) {
-            response = getApiMessage(result.data, API_MESSAGES_TYPES.data);
+            response = getApiMessage(result.data, API_MESSAGES_TYPES.data, result.meta);
           }
           if (result.msg) {
             response = getApiMessage(result.msg, API_MESSAGES_TYPES.info);
@@ -25,8 +25,6 @@ const handler = (fn) => {
           if (result.error) {
             throw result;
           }
-
-
 
           res.send(response);
         }
