@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 
-
 function dbConnect({
   user, pass, dbHost, dbName
 }) {

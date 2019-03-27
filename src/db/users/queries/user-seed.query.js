@@ -17,11 +17,17 @@ function genFakeUserList(num) {
   return arr;
 }
 
-module.exports = {
-  up: (queryInterface) => {
-    return queryInterface.bulkInsert('Users', genFakeUserList(seedNumber), {});
-  },
-  down: (queryInterface) => {
-    return queryInterface.bulkDelete('Users', null, {});
+async function userSeedQuery(UserModel, count) {
+  const records = genFakeUserList(count);
+
+  try {
+    await UserModel.bulkCreate(records);
+  } catch (e) {
+    console.log('Error to seed user collection', e);
+    throw e;
   }
-};
+
+  return true;
+}
+
+module.exports = userSeedQuery;
