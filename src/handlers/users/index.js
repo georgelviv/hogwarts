@@ -8,17 +8,28 @@ const router = (db) => {
   routes.use(validateUserSchema);
 
   routes.get('/', (req, res) => {
+    const { query: { limit } } = req;
     handler(() => {
-      return db.users.read().then((users) => {
-        return { data: users };
-      });
+      return Promise.all([
+        db.users.read({ limit }),
+        db.users.count()
+      ])
+        .then(([users, total]) => {
+          return {
+            data: users,
+            meta: {
+              limit: users.length,
+              total
+            }
+          };
+        });
     })(req, res);
   });
 
   routes.get('/:id', (req, res) => {
     handler((_req) => {
       const userId = _req.params.id;
-      return db.users.read(userId)
+      return db.users.readById(userId)
         .then((user) => {
           let result = {
             error: true,
@@ -56,17 +67,20 @@ const router = (db) => {
       const userId = _req.params.id;
       const userData = _req.body;
 
+      let result = {
+        error: true,
+        statusCode: 500,
+        msg: `Error to update user with id ${userId}`
+      };
+
       return db.users.update(userId, userData)
         .then((user) => {
-          let result = {
-            error: true,
-            statusCode: 500,
-            msg: `User with id ${userId} not found`
-          };
           if (user) {
             result = { data: user };
           }
 
+          return result;
+        }).catch(() => {
           return result;
         });
     })(req, res);
@@ -86,17 +100,20 @@ const router = (db) => {
   routes.delete('/:id', (req, res) => {
     handler((_req) => {
       const userId = _req.params.id;
+      let result = {
+        error: true,
+        statusCode: 404,
+        msg: `User with id ${userId} not found`
+      };
+
       return db.users.remove(userId)
         .then((isDeleted) => {
-          let result = {
-            error: true,
-            statusCode: 404,
-            msg: `User with id ${userId} not found`
-          };
-
           if (isDeleted) {
             result = { msg: 'OK' };
           }
+          return result;
+        })
+        .catch(() => {
           return result;
         });
     })(req, res);

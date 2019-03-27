@@ -11,7 +11,6 @@ const {
   SERVER_PORT
 } = process.env;
 
-
 initDB({
   dbName,
   pass,

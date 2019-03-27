@@ -3,6 +3,8 @@ const { API_MESSAGES_TYPES } = require('constants');
 
 const handler = (fn) => {
   return (req, res) => {
+    const handleTimeStart = Date.now();
+
     return Promise.resolve()
       .then(() => {
         return fn(req, res);
@@ -10,9 +12,12 @@ const handler = (fn) => {
       .then((result) => {
         let response = result;
 
+        const handleTime = Date.now() - handleTimeStart;
+        res.set('Server-Timing', `db;dur=${handleTime}`);
+
         if (result) {
           if (result.data) {
-            response = getApiMessage(result.data, API_MESSAGES_TYPES.data);
+            response = getApiMessage(result.data, API_MESSAGES_TYPES.data, result.meta);
           }
           if (result.msg) {
             response = getApiMessage(result.msg, API_MESSAGES_TYPES.info);

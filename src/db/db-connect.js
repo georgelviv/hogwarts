@@ -10,7 +10,8 @@ function dbConnect({
     database: dbName,
     host: dbHost,
     dialect: 'postgres',
-    operatorsAliases: false
+    operatorsAliases: false,
+    logging: false
   });
 
   return sequelize
