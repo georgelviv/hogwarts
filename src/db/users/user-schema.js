@@ -8,7 +8,7 @@ const userSchemaJoi = {
     .required()
 };
 
-const userSchemaSequalize = {
+const userSchemaSequelize = {
   name: {
     type: Sequelize.STRING,
     validate: {
@@ -50,5 +50,5 @@ const userSchemaSequalize = {
 
 module.exports = {
   joi: userSchemaJoi,
-  sequalize: userSchemaSequalize
+  sequelize: userSchemaSequelize
 };

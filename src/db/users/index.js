@@ -1,3 +1,4 @@
+const { Model } = require('sequelize').Sequelize;
 const userSchema = require('./user-schema');
 
 async function read(userModel, { limit = 10 }) {
@@ -99,27 +100,29 @@ async function remove(userModel, id) {
   return true;
 }
 
-function users(sequalize) {
-  const UserModel = sequalize.define('User', userSchema.sequalize);
-
-  return UserModel.sync({ force: true }, {
+function users(sequelize) {
+  class User extends Model {}
+  User.init(userSchema.sequelize, {
+    sequelize,
     indexes: [
-      {
-        name: 'name_index',
-        method: 'BTREE',
-        fields: ['name']
-      }
-    ]
-  })
+        {
+          name: 'name_index',
+          method: 'BTREE',
+          fields: ['name']
+        }
+      ]
+    });
+
+  return User.sync()
     .then(() => {
       return {
-        readById: readById.bind(null, UserModel),
-        read: read.bind(null, UserModel),
-        create: create.bind(null, UserModel),
-        update: update.bind(null, UserModel),
-        clear: clear.bind(null, UserModel),
-        remove: remove.bind(null, UserModel),
-        count: count.bind(null, UserModel)
+        readById: readById.bind(null, User),
+        read: read.bind(null, User),
+        create: create.bind(null, User),
+        update: update.bind(null, User),
+        clear: clear.bind(null, User),
+        remove: remove.bind(null, User),
+        count: count.bind(null, User)
       };
     });
 }

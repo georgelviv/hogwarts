@@ -1,4 +1,4 @@
-const userModel = require('../../src/db/users/user-schema').sequalize;
+const userModel = require('../../src/db/users/user-schema').sequelize;
 
 module.exports = {
   up: (queryInterface) => {
