@@ -20,12 +20,13 @@
     "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "faker": "^4.1.0",
     "joi": "^14.3.1",
     "module-alias": "^2.1.0",
     "morgan": "^1.9.1",
     "pg": "^7.8.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.42.1"
+    "sequelize": "^5.2.3"
   },
   "engineStrict": true,
   "engines": {
@@ -34,8 +35,8 @@
   "scripts": {
     "start": "node --require dotenv/config src/index.js",
     "start:watch": "nodemon  --legacy-watch --config nodemon.json --require dotenv/config src/index.js",
-    "lint": "npx eslint src",
-    "lint:fix": "npx eslint --fix src"
+    "lint": "npx eslint src/",
+    "lint:fix": "npx eslint --fix src/"
   },
   "_moduleAliases": {
     "server": "src/server",
@@ -48,7 +49,6 @@
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
-    "faker": "^4.1.0",
     "nodemon": "^1.18.9"
   }
 }

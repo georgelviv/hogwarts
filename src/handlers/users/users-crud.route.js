@@ -5,29 +5,10 @@ const validateUserSchema = require('./users-schema.validator.middleware');
 const usersCrudRoute = (db) => {
   const routes = express.Router();
 
-  routes.get('/', (req, res) => {
-    const { query: { limit } } = req;
-    handler(() => {
-      return Promise.all([
-        db.users.read({ limit }),
-        db.users.count()
-      ])
-        .then(([users, total]) => {
-          return {
-            data: users,
-            meta: {
-              limit: users.length,
-              total
-            }
-          };
-        });
-    })(req, res);
-  });
-
   routes.get('/:id', (req, res) => {
     handler((_req) => {
       const userId = _req.params.id;
-      return db.users.readById(userId)
+      return db.users.findById(userId)
         .then((user) => {
           let result = {
             error: true,

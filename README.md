@@ -15,3 +15,5 @@ SERVER_PORT=[Port number]
 ## TODO
 
 
+
+db;dur=200

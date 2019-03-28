@@ -1,21 +1,26 @@
 const usersCountQuery = require('./users-count.query');
 const usersClearQuery = require('./users-clear.query');
 const userSeedQuery = require('./user-seed.query');
+const userFindQuery = require('./user-find.query');
+const userDropTableQuery = require('./user-drop-table.query');
+const userCreateTableQuery = require('./user-create-table.query');
+
 const {
-  readById,
-  read,
+  findById,
   create,
   update,
-  remove,
+  remove
 } = require('./user-crud.query');
 
 module.exports = {
   count: usersCountQuery,
   clear: usersClearQuery,
   seed: userSeedQuery,
-  readById,
-  read,
+  findById,
+  find: userFindQuery,
   create,
   update,
-  remove
+  remove,
+  dropTable: userDropTableQuery,
+  createTable: userCreateTableQuery
 };

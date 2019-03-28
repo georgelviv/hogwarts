@@ -2,14 +2,22 @@ const Joi = require('joi');
 const Sequelize = require('sequelize');
 
 const userSchemaJoi = {
-  name: Joi.string().min(3).max(200).required(),
+  firstName: Joi.string().min(3).max(200).required(),
+  lastName: Joi.string().min(3).max(200).required(),
   gender: Joi.any().valid('male', 'female').required(),
   age: Joi.number().integer().min(0).max(150)
     .required()
 };
 
 const userSchemaSequelize = {
-  name: {
+  firstName: {
+    type: Sequelize.STRING,
+    validate: {
+      len: [3, 200]
+    },
+    allowNull: false
+  },
+  lastName: {
     type: Sequelize.STRING,
     validate: {
       len: [3, 200]

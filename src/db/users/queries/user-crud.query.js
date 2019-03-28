@@ -1,21 +1,8 @@
-async function read(userModel, { limit = 10 }) {
-  let userCollection;
-  limit = Number(limit);
-  try {
-    userCollection = await userModel.findAll({ limit })
-  } catch (e) {
-    console.log('Error to read users', e);
-    throw e;
-  }
-
-  return userCollection;
-}
-
-async function readById(userModel, id) {
+async function findById(userModel, id) {
   let user;
-  id = Number(id);
+  const idParam = Number(id);
   try {
-    user = await userModel.findById(id)
+    user = await userModel.findById(idParam);
   } catch (e) {
     console.log(`Error to find user width id ${id}`, e);
     throw e;
@@ -72,9 +59,8 @@ async function remove(userModel, id) {
 }
 
 module.exports = {
-  readById,
-  read,
+  findById,
   create,
   update,
   remove
-}
+};

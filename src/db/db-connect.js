@@ -9,7 +9,6 @@ function dbConnect({
     database: dbName,
     host: dbHost,
     dialect: 'postgres',
-    operatorsAliases: false,
     logging: false
   });
 
