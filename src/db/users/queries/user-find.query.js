@@ -16,9 +16,18 @@ async function userFindQuery(userModel, {
   if (nameLike) {
     params.where = {
       ...params.where,
-      firstName: {
-        [Op.substring]: nameLike
-      }
+      [Op.or]: [
+        {
+          firstName: {
+            [Op.substring]: nameLike
+          }
+        },
+        {
+          lastName: {
+            [Op.substring]: nameLike
+          }
+        }
+      ]
     };
   }
 
