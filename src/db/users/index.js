@@ -15,15 +15,7 @@ const {
 function users(sequelize) {
   const { User } = userSchema;
   User.init(userSchema.sequelize, {
-    sequelize,
-    indexes: [
-      {
-        name: 'index_name',
-        using: 'gin',
-        operator: 'text_pattern_ops',
-        fields: ['firstName', 'lastName']
-      }
-    ]
+    sequelize
   });
 
   return User.sync()
