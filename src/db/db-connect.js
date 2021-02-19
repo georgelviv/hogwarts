@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 
-
 function dbConnect({
   user, pass, dbHost, dbName
 }) {
@@ -10,7 +9,6 @@ function dbConnect({
     database: dbName,
     host: dbHost,
     dialect: 'postgres',
-    operatorsAliases: false,
     logging: false
   });
 

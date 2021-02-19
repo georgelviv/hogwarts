@@ -1,0 +1,14 @@
+version: '3'
+services: 
+  app:
+    image: hogwarts
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+  postgres:
+    image: postgres
+    environment: 
+      POSTGRES_DB: hogwarts_library
+      POSTGRES_USER: harry_potter
+      POSTGRES_PASSWORD: nsW2!xmZ

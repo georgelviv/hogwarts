@@ -18,8 +18,9 @@ const validateUserSchema = (req, res, next) => {
 
       res.status(400).send(response);
     }
+  } else {
+    next();
   }
-  next();
 };
 
 module.exports = validateUserSchema;
